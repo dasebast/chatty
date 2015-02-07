@@ -4,13 +4,18 @@ var app = angular.module('chattyApp');
 app.controller('MessageCtrl', function ($scope, MessageService) {
     $scope.messages = [];
 
-    MessageService.getMessages().then(function(response) {
-    	$scope.messages = response.data;
-    });
 
-    $scope.addMessage = function(chatMsg) {
-    	MessageService.
+    $scope.addMessage = function() {
+        MessageService.postMessage($scope.chatMsg).then(function(data) {
+            $scope.messages = data.data;
+            $scope.chatMsg = '';
+        });
     };
-  
+
+    MessageService.getMessages().then(function(response) {
+    	$scope.messages = response;
+    });
+    
+
 
 });

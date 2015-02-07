@@ -8,16 +8,13 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
     <link rel="stylesheet" href="styles/main.css">
   </head>
-  <body ng-controller="MessageCtrl">
+  <body ng-controller="MainCtrl">
 
-      <form ng-submit="addMessage()">
-        <input type="text" ng-model="chatMsg"/>
-      </form>   
+    
+
 
     <!-- Add your site or application content here -->
-    <div class="container" ng-include="'views/main.html'">
-         <div ng-repeat="message in messages">{{message}}</div>
-    </div>
+    <div class="container" ng-include="'views/main.html'"></div>
     
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" ></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.js"></script>

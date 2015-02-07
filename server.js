@@ -10,7 +10,7 @@ var onRequest = function(req, res) {
 			'Content-type': 'application/json',
 			'Access-Control-Allow-Origin': '*'
 		});
-		res.end(JSON.stringify({message: messages}));
+		res.end(JSON.stringify(messages));
 	}; //close if
 	
 	if(req.method === 'POST') {
@@ -19,11 +19,59 @@ var onRequest = function(req, res) {
 			postData += chunk.toString();
 		});
 		req.on('end', function() {
-			messages.push(JSON.parse(postData));
-			res.end(postData);
+			console.log('got the data')
+			var newMessage = JSON.parse(postData);
+			newMessage.createdAt = new Date().toISOString();
+			messages.push(newMessage);
+			// messages.push(JSON.parse(postData));
+			res.writeHead(200, {
+			'Connection': 'close',
+			'Content-type': 'application/json',
+			'Access-Control-Allow-Origin': '*'
+			});
+			res.end(JSON.stringify(messages));
 		});
-	};
-
+	};	
+	if(req.method === 'OPTIONS') {
+		res.writeHead(200, {
+			'Access-Control-Allow-Origin': '*',
+			'Access-Control-Allow-Methods': 'OPTIONS, GET, POST',
+			'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+		});
+		res.end();
+	}
 }; //close onRequest
 
 http.createServer(onRequest).listen(port);
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// 	res.writeHead(200, {
+	// 		'Connection': 'Close',
+	// 		'Content-type': 'application/json',
+	// 		'Access-Control-Allow-Origin': '*',
+	// 		'Access-Control-Allow-Methods': 'OPTIONS, GET, POST'
+
+	// 	})
+	// 	res.end(JSON.stringify(messages));
+	// } else if (req.method === 'OPTIONS') {
+	// 	res.writeHead(200, {
+	// 		'Access-Control-Allow-Origin': '*',
+	// 		'Access-Control-Allow-Methods': 'OPTIONS, GET, POST',
+	// 		'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-type, Accept'
+	// 	});
+	// }
